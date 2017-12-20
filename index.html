@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>41博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="41博客">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="41博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="41博客">
+  
+    <link rel="alternate" href="/atom.xml" title="41博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">41博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-基于Spring的一致性哈希redis缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/20/基于Spring的一致性哈希redis缓存/" class="article-date">
+  <time datetime="2017-12-20T08:25:46.929Z" itemprop="datePublished">2017-12-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基于Spring的一致性哈希redis缓存"><a href="#基于Spring的一致性哈希redis缓存" class="headerlink" title="基于Spring的一致性哈希redis缓存"></a>基于Spring的一致性哈希redis缓存</h1><p><img src="https://fourwenwen.github.io/fww/image/logo100_100.jpg" alt="wen icon"></p>
+<p>目前关于redis集群方案，官方方案是Redis cluster,Redis3.0以后正式提供。大家可以了解下。<br>虽然官方方案都有，并且网上也有很多关于这方面的内容，为什么还要自己造轮子。哈哈，程序员不久最喜欢造轮子。核心功能已经完成，但是会持续更新的。<br>功能简陋，代码难看，多多谅解，仅供学习。任意的意见和建议，欢迎随意与我沟通。<br>项目的Bug和改进点，可在GitHub上以issue的方式直接提交给我。</p>
+<h2 id="代码获取"><a href="#代码获取" class="headerlink" title="代码获取"></a>代码获取</h2><p>GitHub:<a href="https://github.com/Fourwenwen/consistent-hashing-redis.git" target="_blank" rel="noopener">https://github.com/Fourwenwen/consistent-hashing-redis.git</a></p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>DHT-redis-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。<br>spring-boot-example 使用spring-consistent-hash-cache的spring boot例子<br>spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子</p>
+<h3 id="需要知识点"><a href="#需要知识点" class="headerlink" title="需要知识点"></a>需要知识点</h3><ul>
+<li>基于spring开发的</li>
+<li>spring cache,基于注释的cache技术，它本质上不是一个具体的缓存实现方案，而是一个对缓存使用的抽象。</li>
+<li>redis,key-value存储系统。</li>
+<li>一致性哈希算法，可自行去问度娘。</li>
+</ul>
+<p><a name="配置说明"></a></p>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><p>必须在项目resources目录下放置ch-cache.properties文件。</p>
+<h4 id="redis服务器数量"><a href="#redis服务器数量" class="headerlink" title="redis服务器数量"></a>redis服务器数量</h4><p>-redis.count=2</p>
+<h4 id="redis服务器0配置"><a href="#redis服务器0配置" class="headerlink" title="redis服务器0配置"></a>redis服务器0配置</h4><p>-redis.host0=192.168.0.1<br>-redis.port0=6379<br>-reids.passwd0=test<br>-redis.db.size0=16</p>
+<h4 id="redis服务器1配置"><a href="#redis服务器1配置" class="headerlink" title="redis服务器1配置"></a>redis服务器1配置</h4><p>-redis.host1=192.168.0.2<br>-redis.port1=6380<br>-reids.passwd1=test<br>-redis.db.size1=16</p>
+<h3 id="使用方法（简单说明）"><a href="#使用方法（简单说明）" class="headerlink" title="使用方法（简单说明）"></a>使用方法（简单说明）</h3><ol>
+<li><p>maven导入项目包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;win.pangniu.four&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;DHT-redis-cache&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目resources文件加中添加ch-cache.properties文件。配置内容细看<a href="#配置说明">配置说明</a>。</p>
+</li>
+<li><p>在项目中进行配置</p>
+<ul>
+<li><em>Spring boot项目</em> 参考spring-boot-example项目中的配置，细看CacheConfig.class。</li>
+<li><em>Spring mvc项目</em> 参考spring-mvc-example项目中的配置，细看spring-context-rediscache.xml。</li>
+</ul>
+</li>
+<li><p>功能使用。详情请看两个example项目的 controller和service层的代码。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/20/基于Spring的一致性哈希redis缓存/" data-id="cjbeubyf60001vcfokqkydaif" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Java实现浏览器端大文件分片上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/20/Java实现浏览器端大文件分片上传/" class="article-date">
+  <time datetime="2017-12-20T08:24:08.652Z" itemprop="datePublished">2017-12-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Breakpoint-http"><a href="#Breakpoint-http" class="headerlink" title="Breakpoint-http"></a>Breakpoint-http</h1><p><img src="https://fourwenwen.github.io/fww/image/logo100_100.jpg" alt="wen icon"></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#背景介绍">背景介绍</a></li>
+<li><a href="#项目介绍">项目介绍</a></li>
+<li><a href="#使用说明">使用说明</a><ul>
+<li><a href="#获取代码">获取代码</a></li>
+<li><a href="#需要知识点">需要知识点</a></li>
+<li><a href="#启动项目">启动项目</a></li>
+<li><a href="#项目示范">项目示范</a> </li>
+</ul>
+</li>
+<li><a href="#功能分析">核心讲解</a><ul>
+<li><a href="#重要原理">重要原理</a></li>
+</ul>
+</li>
+<li><a href="#功能分析">功能分析</a><ul>
+<li><a href="#分块上传">分块上传</a></li>
+<li><a href="#秒传功能">秒传功能</a></li>
+<li><a href="#断点续传">断点续传</a></li>
+</ul>
+</li>
+<li><a href="#总结">总结</a></li>
+</ul>
+<p><a name="背景介绍"></a></p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>&emsp;&emsp;<em>Breakpoint-http</em>，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js，可惜<br>因为种种原因而作罢了。该项目是基于一款百度开源的前端上传控件：WebUploader（百度开源的东西文档一如既往的差，哈哈。或者是我理解能力差）。<br></p>
+<p>&emsp;&emsp;<em>Breakpoint-http</em>，当初想实现这一块web大文件上传，是因为有一天同时询问我这方面的知识，我发现好像在实战中没写过这类的代码啊。既然知道了自己不足那<br>肯定要狠狠补一下。所以才有了这个项目。  </p>
+<p>&emsp;&emsp;对了这个项目是gradle+Spring Boot可能有部分人还没接触过这两个东西，这里就不进行讲解了，毕竟这不是重点，把gradle当成maven吧，虽然它还有更出色的功能。<br>Spring Boot用来简化Spring应用的初始搭建以及开发过程，一个约定大于规范的框架。</p>
+<p><a name="项目介绍"></a></p>
+<h2 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h2><p>&emsp;&emsp;<em>Breakpoint-http</em> 是一个基于大文件上传，并参考网盘上传文件，而基于web的大文件上传实现项目。web中上传大文件没有桌面软件那么容易，还好现在是身处于<br>一个html5的时代。我们web端上传文件常用的做法就是用表单上传了，一旦上传的文件大小较大，一旦带宽跟不上，那用户只能在哪里一直等着，不能做刷新页面的操作，<br>并且一旦产生网络波动，那么用户所做的一切就白费了。<br>&emsp;&emsp;<em>Breakpoint-http</em>就是为了保证在web端上传大文件能达到基本的可靠性的一种方案，方法多种，可能的方案会更出色，欢迎讨论。要让大文件上传能达到可用性，我们需要做到怎么样的程度呢？</p>
+<ul>
+<li><strong>断点续传</strong> 最主要的功能之一，在断网或者在暂停的情况下，能够在上传断点中继续上传。</li>
+<li><strong>分块上传</strong> 也是断点续传的基础之一，把大文件通过前端分块，然后后台在组在一起。</li>
+<li><strong>文件妙传</strong> 这个相信大家在网盘中见过不少了，就是服务中已经有人上传过得文件，其他人再上传这个文件就秒上传到服务中去。</li>
+<li><strong>其他功能</strong> 把下面这些功能归类到其他，是因为它们基本都是通过WebUploader(<a href="http://fex.baidu.com/webuploader" target="_blank" rel="noopener">http://fex.baidu.com/webuploader</a>)来实现的，很简单。<ul>
+<li><em>多线程上传</em> 多个线程上传不同的块文件。</li>
+<li><em>文件进度显示</em> 显示文件的上传完成情况。</li>
+<li>UI等等。   </li>
+</ul>
+</li>
+</ul>
+<p><a name="使用说明"></a></p>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><p><a name="获取代码"></a></p>
+<h3 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h3><ul>
+<li>GitHub:<a href="https://github.com/Fourwenwen/Breakpoint-http.git" target="_blank" rel="noopener">https://github.com/Fourwenwen/Breakpoint-http.git</a></li>
+<li>OSChina项目主页: <a href="https://git.oschina.net/Fourwenwen/breakpoint-http.git" target="_blank" rel="noopener">https://git.oschina.net/Fourwenwen/breakpoint-http.git</a><br><br>持续更新。</li>
+</ul>
+<p><a name="需要知识点"></a></p>
+<h3 id="需要知识点"><a href="#需要知识点" class="headerlink" title="需要知识点"></a>需要知识点</h3><ul>
+<li>基于spring boot开发的。</li>
+<li>WebUploader，WebUploader是由Baidu WebFE(FEX)团队开发的一个简单的以HTML5为主，FLASH为辅的现代文件上传组件。</li>
+<li>redis,key-value存储系统，在这里我把redis用作存储文件路径来使用。</li>
+<li>Gradle，Gradle是一个基于JVM的构建工具。这里我用Gradle顶替了Maven。嗯，多学点东西。</li>
+</ul>
+<p><a name="启动项目"></a></p>
+<h3 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h3><ol>
+<li><p>main方法直接运行：<br>(1)找到App启动类（win.pangniu.learn包下）<br>(2)执行main方法。<br>(3)然后用浏览器访问：<a href="http://localhost:9090" target="_blank" rel="noopener">http://localhost:9090</a></p>
+</li>
+<li><p>tomcat运行：<br>(1)执行命令gradle war。<br>(2)在out目录下找到bphttp.war包。<br>(3)拷贝到tomcat，然后运行tomcat。<br>(4)然后用浏览器访问：<a href="http://localhost:9090" target="_blank" rel="noopener">http://localhost:9090</a></p>
+</li>
+</ol>
+<p><a name="项目示范"></a></p>
+<h3 id="项目示范"><a href="#项目示范" class="headerlink" title="项目示范"></a>项目示范</h3><ol>
+<li>上传完后的页面<br><img src="https://fourwenwen.github.io/fww/image/bphttp/duan1.jpg" alt="duan1"></li>
+<li>妙传功能演示页面<br><img src="https://fourwenwen.github.io/fww/image/bphttp/duan1.jpg" alt="duan1"><br>详情自己运行就知道。</li>
+</ol>
+<p><a name="核心讲解"></a></p>
+<h2 id="核心讲解"><a href="#核心讲解" class="headerlink" title="核心讲解"></a>核心讲解</h2><p><a name="核心原理"></a></p>
+<h3 id="核心原理"><a href="#核心原理" class="headerlink" title="核心原理"></a>核心原理</h3><p>&emsp;&emsp;该项目核心就是文件分块上传。前后端要高度配合，需要双方约定好一些数据，才能完成大文件分块，我们在项目中要重点解决的以下问题。<br>&emsp;&emsp;<em> 如何分片；<br>&emsp;&emsp;</em> 如何合成一个文件；<br>&emsp;&emsp;* 中断了从哪个分片开始。<br>&emsp;&emsp;如何分，利用强大的js库，来减轻我们的工作，市场上已经能有关于大文件分块的轮子，虽然程序员的天性曾迫使我重新造轮子。但是因为时间的关系还有工作的关系，我只能罢休了。最后我选择了百度的WebUploader来实现前端所需。<br>&emsp;&emsp;如何合，在合之前，我们还得先解决一个问题，我们如何区分分块所属那个文件的。刚开始的时候，我是采用了前端生成了唯一uuid来做文件的标志，在每个分片请求上带上。不过后来在做秒传的时候我放弃了，采用了Md5来维护分块和文件关系。<br>&emsp;&emsp;在服务端合并文件，和记录分块的问题，在这方面其实行业已经给了很好的解决方案了。参考迅雷，你会发现，每次下载中的时候，都会有两个文件，一个文件主体，另外一个就是文件临时文件，临时文件存储着每个分块对应字节位的状态。<br>这些都是需要前后端密切联系才能做好，前端需要根据固定大小对文件进行分片，并且请求中要带上分片序号和大小。前端发送请求顺利到达后台后，服务器只需要按照请求数据中给的分片序号和每片分块大小（分片大小是固定且一样的）算出开始位置，与读取到的文件片段数据，写入文件即可。</p>
+<p><a name="功能分析"></a></p>
+<h2 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h2><p><a name="分块上传"></a></p>
+<h3 id="分块上传"><a href="#分块上传" class="headerlink" title="分块上传"></a>分块上传</h3><p>&emsp;&emsp;分块上传可以说是我们整个项目的基础，像断点续传、暂停这些都是需要用到分块。<br>分块这块相对来说比较简单。前端是采用了webuploader，分块等基础功能已经封装起来，使用方便。<br>借助webUpload提供给我们的文件API,前端就显得异常简单。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// 实例化wu</span><br><span class="line">var uploader = WebUploader.create(&#123;</span><br><span class="line">    pick: &#123;</span><br><span class="line">        id: &apos;#picker&apos;,</span><br><span class="line">        label: &apos;点击选择文件&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    formData: &#123;</span><br><span class="line">        uid: 0,</span><br><span class="line">        md5: &apos;&apos;,</span><br><span class="line">        chunkSize: chunkSize</span><br><span class="line">    &#125;,</span><br><span class="line">    //dnd: &apos;#dndArea&apos;,</span><br><span class="line">    //paste: &apos;#uploader&apos;,</span><br><span class="line">    swf: &apos;js/Uploader.swf&apos;,</span><br><span class="line">    chunked: true,</span><br><span class="line">    chunkSize: chunkSize, // 字节 1M分块</span><br><span class="line">    threads: 3,</span><br><span class="line">    server: &apos;index/fileUpload&apos;,</span><br><span class="line">    auto: false,</span><br><span class="line"></span><br><span class="line">    // 禁掉全局的拖拽功能。这样不会出现图片拖进页面的时候，把图片打开。</span><br><span class="line">    disableGlobalDnd: true,</span><br><span class="line">    fileNumLimit: 1024,</span><br><span class="line">    fileSizeLimit: 1024 * 1024 * 1024,    // 200 M</span><br><span class="line">    fileSingleSizeLimit: 1024 * 1024 * 1024    // 50 M</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;分则必合。把大文件分片了，但是分片了就没有原本文件功能，所以我们要把分片合成为原本的文件。我们只需要把分片按原本位置写入到文件中去。因为前面原理那一部我们已经讲到了，我们知道分块大小和分块序号，我就可以知道该分块在文件中的起始位置。所以这里使用RandomAccessFile是明智的，RandomAccessFile能在文件里面前后移动。但是在andomAccessFile的绝大多数功能，已经被JDK1.4的NIO的“内存映射文件(memory-mapped files)”取代了。我在该项目中分别写了使用RandomAccessFile与MappedByteBuffer来合成文件。分别对应的方法是uploadFileRandomAccessFile和uploadFileByMappedByteBuffer。两个方法代码如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">public void uploadFileRandomAccessFile(MultipartFileParam param) throws IOException &#123;</span><br><span class="line">       String fileName = param.getName();</span><br><span class="line">       String tempDirPath = finalDirPath + param.getMd5();</span><br><span class="line">       String tempFileName = fileName + &quot;_tmp&quot;;</span><br><span class="line">       File tmpDir = new File(tempDirPath);</span><br><span class="line">       File tmpFile = new File(tempDirPath, tempFileName);</span><br><span class="line">       if (!tmpDir.exists()) &#123;</span><br><span class="line">           tmpDir.mkdirs();</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       RandomAccessFile accessTmpFile = new RandomAccessFile(tmpFile, &quot;rw&quot;);</span><br><span class="line">       long offset = CHUNK_SIZE * param.getChunk();</span><br><span class="line">       //定位到该分片的偏移量</span><br><span class="line">       accessTmpFile.seek(offset);</span><br><span class="line">       //写入该分片数据</span><br><span class="line">       accessTmpFile.write(param.getFile().getBytes());</span><br><span class="line">       // 释放</span><br><span class="line">       accessTmpFile.close();</span><br><span class="line"></span><br><span class="line">       boolean isOk = checkAndSetUploadProgress(param, tempDirPath);</span><br><span class="line">       if (isOk) &#123;</span><br><span class="line">           boolean flag = renameFile(tmpFile, fileName);</span><br><span class="line">           System.out.println(&quot;upload complete !!&quot; + flag + &quot; name=&quot; + fileName);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   public void uploadFileByMappedByteBuffer(MultipartFileParam param) throws IOException &#123;</span><br><span class="line">           String fileName = param.getName();</span><br><span class="line">           String uploadDirPath = finalDirPath + param.getMd5();</span><br><span class="line">           String tempFileName = fileName + &quot;_tmp&quot;;</span><br><span class="line">           File tmpDir = new File(uploadDirPath);</span><br><span class="line">           File tmpFile = new File(uploadDirPath, tempFileName);</span><br><span class="line">           if (!tmpDir.exists()) &#123;</span><br><span class="line">               tmpDir.mkdirs();</span><br><span class="line">           &#125;</span><br><span class="line">   </span><br><span class="line">           RandomAccessFile tempRaf = new RandomAccessFile(tmpFile, &quot;rw&quot;);</span><br><span class="line">           FileChannel fileChannel = tempRaf.getChannel();</span><br><span class="line">   </span><br><span class="line">           //写入该分片数据</span><br><span class="line">           long offset = CHUNK_SIZE * param.getChunk();</span><br><span class="line">           byte[] fileData = param.getFile().getBytes();</span><br><span class="line">           MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, offset, fileData.length);</span><br><span class="line">           mappedByteBuffer.put(fileData);</span><br><span class="line">           // 释放</span><br><span class="line">           FileMD5Util.freedMappedByteBuffer(mappedByteBuffer);</span><br><span class="line">           fileChannel.close();</span><br><span class="line">   </span><br><span class="line">           boolean isOk = checkAndSetUploadProgress(param, uploadDirPath);</span><br><span class="line">           if (isOk) &#123;</span><br><span class="line">               boolean flag = renameFile(tmpFile, fileName);</span><br><span class="line">               System.out.println(&quot;upload complete !!&quot; + flag + &quot; name=&quot; + fileName);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p><a name="秒传功能"></a></p>
+<h3 id="秒传功能"><a href="#秒传功能" class="headerlink" title="秒传功能"></a>秒传功能</h3><p>&emsp;&emsp;秒传功能，相信大家都体现过了，网盘上传的时候，发现上传的文件秒传了。其实原理稍微有研究过的同学应该知道，其实就是检验文件MD5，记录下上传到系统的文件的MD5,在一个文件上传前先获取文件内容MD5值或者部分取值MD5，然后在匹配系统上的数据。<br>&emsp;&emsp;<em>Breakpoint-http</em>实现秒传原理，客户端选择文件之后，点击上传的时候触发获取文件MD5值，获取MD5后调用系统一个接口（/index/checkFileMd5），查询该MD5是否已经存在（我在该项目中用redis来存储数据，用文件MD5值来作key，value是文件存储的地址。）接口返回检查状态，然后再进行下一步的操作。相信大家看代码就能明白了。<br>&emsp;&emsp;嗯，前端的MD5取值也是用了webuploader自带的功能，这还是个不错的工具。</p>
+<p><a name="断点续传"></a></p>
+<h3 id="断点续传"><a href="#断点续传" class="headerlink" title="断点续传"></a>断点续传</h3><p>&emsp;&emsp;断点续传，就是在文件上传的过程中发生了中断，人为因素（暂停）或者不可抗力（断网或者网络差）导致了文件上传到一半失败了。然后在环境恢复的时候，重新上传该文件，而不至于是从新开始上传的。<br>&emsp;&emsp;前面也已经讲过，断点续传的功能是基于分块上传来实现的，把一个大文件分成很多个小块，服务端能够把每个上传成功的分块都落地下来，客户端在上传文件开始时调用接口快速验证，条件选择跳过某个分块。<br>&emsp;&emsp;实现原理，就是在每个文件上传前，就获取到文件MD5取值，在上传文件前调用接口（/index/checkFileMd5，没错也是秒传的检验接口）如果获取的文件状态是未完成，则返回所有的还没上传的分块的编号，然后前端进行条件筛算出哪些没上传的分块，然后进行上传。  </p>
+<pre><code>/**
+     * 秒传判断，断点判断
+     *
+     * @return
+     */
+    @RequestMapping(value = &quot;checkFileMd5&quot;, method = RequestMethod.POST)
+    @ResponseBody
+    public Object checkFileMd5(String md5) throws IOException {
+        Object processingObj = stringRedisTemplate.opsForHash().get(Constants.FILE_UPLOAD_STATUS, md5);
+        if (processingObj == null) {
+            return new ResultVo(ResultStatus.NO_HAVE);
+        }
+        String processingStr = processingObj.toString();
+        boolean processing = Boolean.parseBoolean(processingStr);
+        String value = stringRedisTemplate.opsForValue().get(Constants.FILE_MD5_KEY + md5);
+        if (processing) {
+            return new ResultVo(ResultStatus.IS_HAVE, value);
+        } else {
+            File confFile = new File(value);
+            byte[] completeList = FileUtils.readFileToByteArray(confFile);
+            List&lt;String&gt; missChunkList = new LinkedList&lt;&gt;();
+            for (int i = 0; i &lt; completeList.length; i++) {
+                if (completeList[i] != Byte.MAX_VALUE) {
+                    missChunkList.add(i + &quot;&quot;);
+                }
+            }
+            return new ResultVo&lt;&gt;(ResultStatus.ING_HAVE, missChunkList);
+        }
+    }
+</code></pre><p><a name="总结"></a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;身为一个具有拖延症的程序猿，写个文档及其不容易，这方面还是优待加强，写代码时间都还没写这个文档长，并且写了那么久还那么烂的文档。实在抱歉，望谅解。<br>&emsp;&emsp;项目的Bug和改进点，可在评论去留言或者在GitHub或者OSChina上以issue的方式直接提交给我，谢谢大家。</p>
+<p>##参考文献</p>
+<p>[1]<a href="http://fex.baidu.com/webuploader/" target="_blank" rel="noopener">http://fex.baidu.com/webuploader/</a><br>[2]<a href="http://www.zuidaima.com/blog/2819949848316928.htm" target="_blank" rel="noopener">http://www.zuidaima.com/blog/2819949848316928.htm</a><br>[3]<a href="https://my.oschina.net/feichexia/blog/212318" target="_blank" rel="noopener">https://my.oschina.net/feichexia/blog/212318</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/20/Java实现浏览器端大文件分片上传/" data-id="cjbeubyey0000vcfo8r0n9kmx" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/20/基于Spring的一致性哈希redis缓存/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/20/Java实现浏览器端大文件分片上传/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Fourwenwen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

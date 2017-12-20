@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>41博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="基于Spring的一致性哈希redis缓存 目前关于redis集群方案，官方方案是Redis cluster,Redis3.0以后正式提供。大家可以了解下。虽然官方方案都有，并且网上也有很多关于这方面的内容，为什么还要自己造轮子。哈哈，程序员不久最喜欢造轮子。核心功能已经完成，但是会持续更新的。功能简陋，代码难看，多多谅解，仅供学习。任意的意见和建议，欢迎随意与我沟通。项目的Bug和改进点，可在G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="41博客">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/基于Spring的一致性哈希redis缓存/index.html">
+<meta property="og:site_name" content="41博客">
+<meta property="og:description" content="基于Spring的一致性哈希redis缓存 目前关于redis集群方案，官方方案是Redis cluster,Redis3.0以后正式提供。大家可以了解下。虽然官方方案都有，并且网上也有很多关于这方面的内容，为什么还要自己造轮子。哈哈，程序员不久最喜欢造轮子。核心功能已经完成，但是会持续更新的。功能简陋，代码难看，多多谅解，仅供学习。任意的意见和建议，欢迎随意与我沟通。项目的Bug和改进点，可在G">
+<meta property="og:image" content="https://fourwenwen.github.io/fww/image/logo100_100.jpg">
+<meta property="og:updated_time" content="2017-12-20T08:25:46.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="41博客">
+<meta name="twitter:description" content="基于Spring的一致性哈希redis缓存 目前关于redis集群方案，官方方案是Redis cluster,Redis3.0以后正式提供。大家可以了解下。虽然官方方案都有，并且网上也有很多关于这方面的内容，为什么还要自己造轮子。哈哈，程序员不久最喜欢造轮子。核心功能已经完成，但是会持续更新的。功能简陋，代码难看，多多谅解，仅供学习。任意的意见和建议，欢迎随意与我沟通。项目的Bug和改进点，可在G">
+<meta name="twitter:image" content="https://fourwenwen.github.io/fww/image/logo100_100.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="41博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">41博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-基于Spring的一致性哈希redis缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/20/基于Spring的一致性哈希redis缓存/" class="article-date">
+  <time datetime="2017-12-20T08:25:46.929Z" itemprop="datePublished">2017-12-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="基于Spring的一致性哈希redis缓存"><a href="#基于Spring的一致性哈希redis缓存" class="headerlink" title="基于Spring的一致性哈希redis缓存"></a>基于Spring的一致性哈希redis缓存</h1><p><img src="https://fourwenwen.github.io/fww/image/logo100_100.jpg" alt="wen icon"></p>
+<p>目前关于redis集群方案，官方方案是Redis cluster,Redis3.0以后正式提供。大家可以了解下。<br>虽然官方方案都有，并且网上也有很多关于这方面的内容，为什么还要自己造轮子。哈哈，程序员不久最喜欢造轮子。核心功能已经完成，但是会持续更新的。<br>功能简陋，代码难看，多多谅解，仅供学习。任意的意见和建议，欢迎随意与我沟通。<br>项目的Bug和改进点，可在GitHub上以issue的方式直接提交给我。</p>
+<h2 id="代码获取"><a href="#代码获取" class="headerlink" title="代码获取"></a>代码获取</h2><p>GitHub:<a href="https://github.com/Fourwenwen/consistent-hashing-redis.git" target="_blank" rel="noopener">https://github.com/Fourwenwen/consistent-hashing-redis.git</a></p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>DHT-redis-cache 基于spring的一致性hash的redis集群方案的jar包。依赖进去项目，根据订制规则配置就可以使用。<br>spring-boot-example 使用spring-consistent-hash-cache的spring boot例子<br>spring-mvc-example 使用spring-consistent-hash-cache的spring mvc例子</p>
+<h3 id="需要知识点"><a href="#需要知识点" class="headerlink" title="需要知识点"></a>需要知识点</h3><ul>
+<li>基于spring开发的</li>
+<li>spring cache,基于注释的cache技术，它本质上不是一个具体的缓存实现方案，而是一个对缓存使用的抽象。</li>
+<li>redis,key-value存储系统。</li>
+<li>一致性哈希算法，可自行去问度娘。</li>
+</ul>
+<p><a name="配置说明"></a></p>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><p>必须在项目resources目录下放置ch-cache.properties文件。</p>
+<h4 id="redis服务器数量"><a href="#redis服务器数量" class="headerlink" title="redis服务器数量"></a>redis服务器数量</h4><p>-redis.count=2</p>
+<h4 id="redis服务器0配置"><a href="#redis服务器0配置" class="headerlink" title="redis服务器0配置"></a>redis服务器0配置</h4><p>-redis.host0=192.168.0.1<br>-redis.port0=6379<br>-reids.passwd0=test<br>-redis.db.size0=16</p>
+<h4 id="redis服务器1配置"><a href="#redis服务器1配置" class="headerlink" title="redis服务器1配置"></a>redis服务器1配置</h4><p>-redis.host1=192.168.0.2<br>-redis.port1=6380<br>-reids.passwd1=test<br>-redis.db.size1=16</p>
+<h3 id="使用方法（简单说明）"><a href="#使用方法（简单说明）" class="headerlink" title="使用方法（简单说明）"></a>使用方法（简单说明）</h3><ol>
+<li><p>maven导入项目包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;win.pangniu.four&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;DHT-redis-cache&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在项目resources文件加中添加ch-cache.properties文件。配置内容细看<a href="#配置说明">配置说明</a>。</p>
+</li>
+<li><p>在项目中进行配置</p>
+<ul>
+<li><em>Spring boot项目</em> 参考spring-boot-example项目中的配置，细看CacheConfig.class。</li>
+<li><em>Spring mvc项目</em> 参考spring-mvc-example项目中的配置，细看spring-context-rediscache.xml。</li>
+</ul>
+</li>
+<li><p>功能使用。详情请看两个example项目的 controller和service层的代码。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/20/基于Spring的一致性哈希redis缓存/" data-id="cjbeubyf60001vcfokqkydaif" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/20/Java实现浏览器端大文件分片上传/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/20/基于Spring的一致性哈希redis缓存/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/20/Java实现浏览器端大文件分片上传/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Fourwenwen<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
