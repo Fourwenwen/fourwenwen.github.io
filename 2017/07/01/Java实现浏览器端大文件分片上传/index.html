@@ -7,20 +7,20 @@
   
   <title>Java实现浏览器端大文件分片上传 | Fourwenwen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java实现浏览器端大文件分片上传 目录 背景介绍 项目介绍 使用说明 获取代码 需要知识点 启动项目 项目示范    核心讲解 重要原理   功能分析 分块上传 秒传功能 断点续传   总结   背景介绍&amp;emsp;&amp;emsp;Breakpoint-http，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js">
-<meta name="keywords" content="Java,Spring,文件上传,大文件上传,break point,分片上传">
+  <meta name="description" content="目录 背景介绍 项目介绍 使用说明 获取代码 需要知识点 启动项目 项目示范    核心讲解 重要原理   功能分析 分块上传 秒传功能 断点续传   总结   背景介绍&amp;emsp;&amp;emsp;Breakpoint-http，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js，可惜因为种种原因而作罢了。该项目">
+<meta name="keywords" content="Java Spring 文件上传 大文件上传 break-point 分片上传">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java实现浏览器端大文件分片上传">
 <meta property="og:url" content="http://yoursite.com/2017/07/01/Java实现浏览器端大文件分片上传/index.html">
 <meta property="og:site_name" content="Fourwenwen">
-<meta property="og:description" content="Java实现浏览器端大文件分片上传 目录 背景介绍 项目介绍 使用说明 获取代码 需要知识点 启动项目 项目示范    核心讲解 重要原理   功能分析 分块上传 秒传功能 断点续传   总结   背景介绍&amp;emsp;&amp;emsp;Breakpoint-http，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js">
+<meta property="og:description" content="目录 背景介绍 项目介绍 使用说明 获取代码 需要知识点 启动项目 项目示范    核心讲解 重要原理   功能分析 分块上传 秒传功能 断点续传   总结   背景介绍&amp;emsp;&amp;emsp;Breakpoint-http，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js，可惜因为种种原因而作罢了。该项目">
 <meta property="og:image" content="https://fourwenwen.github.io/fww/image/logo100_100.jpg">
 <meta property="og:image" content="https://fourwenwen.github.io/fww/image/bphttp/duan1.jpg">
 <meta property="og:image" content="https://fourwenwen.github.io/fww/image/bphttp/duan1.jpg">
-<meta property="og:updated_time" content="2017-12-20T09:25:27.938Z">
+<meta property="og:updated_time" content="2017-12-20T09:30:01.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java实现浏览器端大文件分片上传">
-<meta name="twitter:description" content="Java实现浏览器端大文件分片上传 目录 背景介绍 项目介绍 使用说明 获取代码 需要知识点 启动项目 项目示范    核心讲解 重要原理   功能分析 分块上传 秒传功能 断点续传   总结   背景介绍&amp;emsp;&amp;emsp;Breakpoint-http，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js">
+<meta name="twitter:description" content="目录 背景介绍 项目介绍 使用说明 获取代码 需要知识点 启动项目 项目示范    核心讲解 重要原理   功能分析 分块上传 秒传功能 断点续传   总结   背景介绍&amp;emsp;&amp;emsp;Breakpoint-http，是不是觉得这个名字有点low，break point断点。这是一个大文件上传的一种实现。因为本来很久没写过前端了，本来想自己好好写一番js，可惜因为种种原因而作罢了。该项目">
 <meta name="twitter:image" content="https://fourwenwen.github.io/fww/image/logo100_100.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Fourwenwen" type="application/atom+xml">
@@ -90,7 +90,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Java实现浏览器端大文件分片上传"><a href="#Java实现浏览器端大文件分片上传" class="headerlink" title="Java实现浏览器端大文件分片上传"></a>Java实现浏览器端大文件分片上传</h1><p><img src="https://fourwenwen.github.io/fww/image/logo100_100.jpg" alt="wen icon"></p>
+        <p><img src="https://fourwenwen.github.io/fww/image/logo100_100.jpg" alt="wen icon"></p>
 <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
 <li><a href="#背景介绍">背景介绍</a></li>
 <li><a href="#项目介绍">项目介绍</a></li>
@@ -205,10 +205,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/01/Java实现浏览器端大文件分片上传/" data-id="cjbeusg1e0003swfoojk0bwa1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/07/01/Java实现浏览器端大文件分片上传/" data-id="cjbeuy5ko0000nsfoemdwvmqa" class="article-share-link">Teilen</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Spring-文件上传-大文件上传-break-point-分片上传/">Java,Spring,文件上传,大文件上传,break point,分片上传</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java-Spring-文件上传-大文件上传-break-point-分片上传/">Java Spring 文件上传 大文件上传 break-point 分片上传</a></li></ul>
 
     </footer>
   </div>
@@ -247,7 +247,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Spring-文件上传-大文件上传-break-point-分片上传/">Java,Spring,文件上传,大文件上传,break point,分片上传</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-redis-一致性哈希，一致性哈希redis-缓存-github/">Spring,redis,一致性哈希，一致性哈希redis,缓存,github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-mongodb-spring-boot-auth-faile/">spring,mongodb,spring-boot,auth-faile</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-Spring-文件上传-大文件上传-break-point-分片上传/">Java Spring 文件上传 大文件上传 break-point 分片上传</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-redis-一致性哈希-一致性哈希redis-缓存-github/">Spring redis 一致性哈希 一致性哈希redis 缓存 github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-mongodb-spring-boot-auth-faile/">spring mongodb spring-boot auth-faile</a></li></ul>
     </div>
   </div>
 
@@ -257,7 +257,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java-Spring-文件上传-大文件上传-break-point-分片上传/" style="font-size: 10px;">Java,Spring,文件上传,大文件上传,break point,分片上传</a> <a href="/tags/Spring-redis-一致性哈希，一致性哈希redis-缓存-github/" style="font-size: 10px;">Spring,redis,一致性哈希，一致性哈希redis,缓存,github</a> <a href="/tags/spring-mongodb-spring-boot-auth-faile/" style="font-size: 10px;">spring,mongodb,spring-boot,auth-faile</a>
+      <a href="/tags/Java-Spring-文件上传-大文件上传-break-point-分片上传/" style="font-size: 10px;">Java Spring 文件上传 大文件上传 break-point 分片上传</a> <a href="/tags/Spring-redis-一致性哈希-一致性哈希redis-缓存-github/" style="font-size: 10px;">Spring redis 一致性哈希 一致性哈希redis 缓存 github</a> <a href="/tags/spring-mongodb-spring-boot-auth-faile/" style="font-size: 10px;">spring mongodb spring-boot auth-faile</a>
     </div>
   </div>
 
